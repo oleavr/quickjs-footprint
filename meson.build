@@ -8,7 +8,14 @@ project('quickjs-footprint', 'c',
   ],
 )
 
-quickjs_dep = dependency('quickjs')
+quickjs_dep = dependency('quickjs',
+  default_options: [
+    'libc=false',
+    'bignum=true',
+    'atomics=disabled',
+    'stack_check=disabled',
+  ],
+)
 
 host_os = host_machine.system()
 if host_os == 'android'
