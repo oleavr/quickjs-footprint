@@ -39,11 +39,11 @@ endif
 
 # Ensure no symbols are visible, so the static linker can eliminate more code.
 if host_os_family == 'darwin'
-  symlist = 'hello.symbols'
+  symlist = 'no-exports.symbols'
   extra_link_args += '-Wl,-exported_symbols_list,' + meson.current_source_dir() / symlist
   extra_link_depends += symlist
 elif host_os_family != 'windows'
-  symscript = 'hello.version'
+  symscript = 'no-exports.version'
   extra_link_args += '-Wl,--version-script,' + meson.current_source_dir() / symscript
   extra_link_depends += symscript
 endif
