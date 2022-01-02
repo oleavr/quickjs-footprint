@@ -4,6 +4,7 @@ project('quickjs-footprint', 'c',
     'default_library=static',
     'optimization=s',
     'b_ndebug=true',
+    'b_lto=true',
     'strip=true',
   ],
 )
@@ -47,9 +48,16 @@ elif host_os_family != 'windows'
   extra_link_depends += symscript
 endif
 
-executable('hello-quickjs', 'hello.c',
-  c_args: extra_c_args,
-  link_args: extra_link_args,
+add_project_arguments(extra_c_args, language: 'c')
+add_project_link_arguments(extra_link_args, language: 'c')
+
+executable('quickjs-footprint-run-js', 'run-js.c',
+  link_depends: extra_link_depends,
+  dependencies: [quickjs_dep],
+  install: true,
+)
+
+executable('quickjs-footprint-run-bytecode', 'run-bytecode.c',
   link_depends: extra_link_depends,
   dependencies: [quickjs_dep],
   install: true,
